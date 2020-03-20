@@ -1,10 +1,11 @@
 '''
 get the counts of sublevels, the release hours of per sublevel and commit count per sublevel pointwise or cumulative.
+Data visulization to inspect data.
 Passing the path storing linux kernel code as repo.
 __author__  = "XiyuanChang 4320180939580"
 __copyright__= "XiyuanChang, Lanzhou University"
 __license__ = "GPL V2"
-__version__ = "0.1"
+__version__ = "0.2"
 __email__ = "xychang2018@lzu.edu.cn"
 __status__ = "continous modification"
 __maintainer__"XiyuanChang"
@@ -60,6 +61,11 @@ class sl_time_cnt(self,repo):
             sys.exit(-1)
 
     def git_commit_cnt(self, rev_2, repo):
+         '''
+        To gain commits of per sulevel
+        >>> output.git_commit_cnt("v4.4-rc1","C:/Users/xycha/Desktop/linux kernel/linux")
+        1856
+        '''
         rev1=self.rev
         #rev2 = rev1+ "." + str(self.rev_range)
         try:
@@ -78,6 +84,11 @@ class sl_time_cnt(self,repo):
             
 
     def get_tag_hour(self,rev_2,repo,base):
+        '''
+        get release hours of per sublevel
+        >>> output.get_tag_hour("v4.4","C:/Users/xycha/Desktop/linux kernel/linux")
+        403463
+        '''
         hour_sec = 3600
         try:
             cmd = ["git","log","-1",'--pretty=format:"%ct"',rev_2]
@@ -93,7 +104,7 @@ class sl_time_cnt(self,repo):
             sys.exit(-1)
 
 
-    def get_data(self,repo):
+    def get_data(self,repo):#get the list[sublevel,hours,commits]
         sublevel = self.subl
         hour = self.hour
         commits = self.cnt
@@ -117,7 +128,7 @@ class sl_time_cnt(self,repo):
                 print(err)
 
 
-        def image(self):
+        def image(self):#data visulization
             plt.scatter(self.sublevels, self.commits)
             plt.title("scatter: development of fixes over sublevel")
             plt.ylabel("stable fix commits")
@@ -166,7 +177,10 @@ class sl_time_cnt(self,repo):
 
 if __name__ == '__main__':
     output = sl_time_cnt("C:/Users/xycha/Desktop/linux kernel/linux")
-    a.main()
+    import doctest
+    doctest.testmod(verbose=True)
+    output.main()
+    
 
     
         
