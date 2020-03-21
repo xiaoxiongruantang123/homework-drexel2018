@@ -71,7 +71,7 @@ def gitcntData(kernelVision, repo):
     return data.decode()
 
 def gittagData(kernelVision, repo):
-    cmd = ["git -P ","log", "-1", "--pretty=format:"%ct""]
+    cmd = ["git -P ","log", "-1", "--pretty=format:\"%ct\""]
     p = Popen(cmd,cwd=repo, stout=PIPE, shell=True)
     data, res = p.communicate()
     return data.decode()
