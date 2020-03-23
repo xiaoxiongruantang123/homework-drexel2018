@@ -49,9 +49,9 @@ class sl_time_cnt(self,repo):
             assert type(repo) == str, 'Invalid repo input'
             f =open(repo)
             f.close()
-            except IOError:
-                print("File is not accessible.")
-                sys.exit(-1)
+        except IOError:
+            print("File is not accessible.")
+            sys.exit(-1)
 
         if args.cumulative == 'c':
             self.cumulative = 1
@@ -124,37 +124,37 @@ class sl_time_cnt(self,repo):
                         return(sublevel, hour, commits)
                     else:
                         break
-            except RevnoException, err:
-                print(err)
+        except RevnoException, err:
+            print(err)
 
 
-        def image(self):#data visulization
-            plt.scatter(self.sublevels, self.commits)
-            plt.title("scatter: development of fixes over sublevel")
-            plt.ylabel("stable fix commits")
-            plt.xlabel("kernel sublevel stable release")
-            plt.savefig("scatter: sublevel_%s.png" % self.rev)
-            plt.clf()
+    def image(self):#data visulization
+        plt.scatter(self.sublevels, self.commits)
+        plt.title("scatter: development of fixes over sublevel")
+        plt.ylabel("stable fix commits")
+        plt.xlabel("kernel sublevel stable release")
+        plt.savefig("scatter: sublevel_%s.png" % self.rev)
+        plt.clf()
 
-            plt.plot(self.sublevels, self.commits)
-            plt.title("plot: development of fixes over sublevel")
-            plt.ylabel("stable fix commits")
-            plt.xlabel("kernel sublevel stable release")
-            plt.savefig("plot: sublevel_%s.png" % self.rev)
-            plt.clf()
+        plt.plot(self.sublevels, self.commits)
+        plt.title("plot: development of fixes over sublevel")
+        plt.ylabel("stable fix commits")
+        plt.xlabel("kernel sublevel stable release")
+        plt.savefig("plot: sublevel_%s.png" % self.rev)
+        plt.clf()
 
-            plt.scatter(self.hour, self.cnt)
-            plt.title("scatter: development of fixes over days")
-            plt.ylabel("stable fix commits")
-            plt.xlabel("hours spent")
-            plt.savefig("scatter: hours_%s.png" % self.rev)
-            plt.clf()
+        plt.scatter(self.hour, self.cnt)
+        plt.title("scatter: development of fixes over days")
+        plt.ylabel("stable fix commits")
+        plt.xlabel("hours spent")
+        plt.savefig("scatter: hours_%s.png" % self.rev)
+        plt.clf()
 
-            plt.plot(self.hour, self.cnt)
-            plt.title("plot: development of fixes over days")
-            plt.ylabel("stable fix commits")
-            plt.xlabel("hours spent")
-            plt.savefig("plot: hours_%s.png" % self.rev)
+        plt.plot(self.hour, self.cnt)
+        plt.title("plot: development of fixes over days")
+        plt.ylabel("stable fix commits")
+        plt.xlabel("hours spent")
+        plt.savefig("plot: hours_%s.png" % self.rev)
     
 
 
