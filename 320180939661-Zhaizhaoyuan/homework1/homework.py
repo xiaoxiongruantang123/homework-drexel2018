@@ -2,7 +2,8 @@
 # -*- coding: utf-8 -*-
 '''
 Run the git command automatically.
-__copyright__ = "Zhai Zhaoyuan, Lanzhou University, 2020"
+__author__ = " Zhai Zhaoyuan, ID:320180939661 "
+__copyright__ = "Zhai Zhaoyuan, Group 03, Lanzhou University, 2020"
 __license__ = "GPL V2 or later"
 __version__ = "0.1"
 __maintainer__ = "Zhai Zhaoyuan"
@@ -11,7 +12,6 @@ __email__ = "zhaizhy18@lzu.edu.cn"
 
 import os, re, sys, argparse
 from subprocess import Popen, PIPE, DEVNULL, TimeoutExpired
-from datetime import datetime as dt
 
 parser = argparse.ArgumentParser(description="Manage integers and strings")
 parser.add_argument('rev', help='the beginning version,for example v4.4')
