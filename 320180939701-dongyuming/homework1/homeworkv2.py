@@ -5,7 +5,7 @@ __author__ = "Yuming Dong 320180939701"
 __copyright__ = "Copyright 2020, LZU Data Science"
 __version__ = "1.0.0"
 
-import re, sys, datatime
+import re, sys, datetime
 from argparse import ArgumentParser
 from subprocess import Popen, TimeoutExpired, PIPE, DEVNULL
 
@@ -23,16 +23,16 @@ class commit_hour:
         self.sublevels = []
         self.release_hours = []
         self.commits = []
-
+        self.judge()
 
     def judge(self):
         if self.cc == 'c':
            self.cumulative = 1
         elif self.cc:
             err = "Dont know what you mean with {}".format(self.cc)
+            print(err)
             self.log_err(err)
             sys.exit(-1)
-            
         try:
             self.rev_range = int(self.rev_range)
         except ValueError:
@@ -53,7 +53,7 @@ class commit_hour:
             raw_counts = git_cmd.communicate()[0]
         if len(raw_counts) == 0:
             print('No more found')
-        sys.exit(-1)
+            sys.exit(-1)
         # if we request something that does not exist -> 0
         cnt = re.findall('[0-9]*-[0-9]*-[0-9]*', str(raw_counts))
         return len(cnt)
@@ -69,8 +69,8 @@ class commit_hour:
             seconds = git_cmd.communicate()[0]
         if len(seconds) == 0:
             e = 'No more record'
-        commit_hour.log_err(e)
-        sys.exit(-1)
+            sys.exit(-1)
+            commit_hour.log_err(e)
         return (int(seconds) - base) // SecPerHour
 
     def get_list(self):
@@ -78,10 +78,11 @@ class commit_hour:
         try:
             rev1 = self.rev
             git_get_time = "git log -1 --pretty=format:\"%ct\" " + rev1
+            #print(git_get_time)
             v = Popen(git_get_time, stdout=PIPE, stderr=DEVNULL)
             vtime = int(v.communicate()[0])  # The timestamp for the initial version, like v44 = 1452466892.
             for sl in range(1, self.rev_range + 1):
-                rev2 = self.rev + '.' + str(sl + 1)
+                rev2 = self.rev + '.' + str(sl)
                 gitcnt = "git rev-list --pretty=format:\"%ai\" " + rev1 + "..." + rev2
                 gittag = "git log -1 --pretty=format:\"%ct\" " + rev2
                 git_rev_list = Popen(gitcnt, stdout=PIPE, stderr=DEVNULL)
@@ -105,7 +106,7 @@ class commit_hour:
             commit_hour.log_err(self, err2)
 
     def log_err(self, err):
-        now = datatime.datatime.now()
+        now = datetime.datetime.now()
         current_time = now.strftime("%Y-%m-%d %H:%M:%S")
         log = 'error_log.txt'
         with open(log, 'a', encoding="utf-8") as f:
