@@ -14,7 +14,7 @@ thanks to team 3 and my friends
 __author__ = "Guoxi Lin"
 __copyright__ = "Copyright 2019, OpenTech Research"
 __credits__ = ["Guoxi Lin"]
-__version__ = "3"
+__version__ = "4"
 __maintainer__ = "Linux maintainer"
 __email__ = "lingx18@lzu.edu.com"
 __status__ = "Experimental"
@@ -111,6 +111,12 @@ class Log_Collect:
 
        return (int(seconds)-base)//SeePerDay# we need the day as normal
 
+    """saving in the csv as a method in the class"""
+    def store_csv(self):
+        self.df.to_csv("Test.csv", encoding="utf-8-sig", mode="a", header=True, index=True)
+        print(self.df)
+
+
     """do what i can do"""
     def main(self, cumulative, rev_range):
         self.df = pd.DataFrame(columns=('lv','hour','bugs'))#create in dateframe
@@ -160,5 +166,4 @@ if __name__ == '__main__':
 #        for i in githistory.collect:
 #            f.write(str(i))
 #            f.write('\n')
-    githistory.df.to_csv("Test.csv", encoding="utf-8-sig", mode="a", header=True, index=True)
-    print(githistory.df)
+    githistory.store_csv()
