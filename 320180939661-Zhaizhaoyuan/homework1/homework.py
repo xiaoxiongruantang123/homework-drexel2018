@@ -1,17 +1,21 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 '''
-Run the git command automatically.
+Run the git command automatically and store the output into csv file
+
+'''
+
 __author__ = " Zhai Zhaoyuan, ID:320180939661 "
 __copyright__ = "Zhai Zhaoyuan, Group 03, Lanzhou University, 2020"
 __license__ = "GPL V2 or later"
 __version__ = "0.1"
 __maintainer__ = "Zhai Zhaoyuan"
 __email__ = "zhaizhy18@lzu.edu.cn"
-'''
 
 import os, re, sys, time, argparse
 from subprocess import Popen, PIPE, DEVNULL, TimeoutExpired
+import pandas as pd
+
 
 class Get_Commit():
     def __init__(self):
@@ -37,6 +41,7 @@ class Get_Commit():
         print("#sublevel commits %s stable fixes" % self.rev)
         print("lv hour bugs")
         self.count_commit_date(cumulative,rev_range) 
+        
     def get_commit_cnt(self,git_cmd):
         '''Find the length of output,produced by git command, which fits the requirement of regular expression
         
@@ -56,8 +61,8 @@ class Get_Commit():
         cnt = re.findall('[0-9]*-[0-9]*-[0-9]*', str(raw_counts))
         return len(cnt)
     
-    def get_tag_days(self,git_cmd, base):
-        '''Create a pipe for subflow and get date of commits.
+    def get_tag_hours(self,git_cmd, base):
+        '''Create a pipe for subflow and get hours of commits.
         
         This function is called by the funtion of count_commmit. Two arguments are 
         about git command and base time of certain commit.
@@ -72,7 +77,12 @@ class Get_Commit():
             raise TimeoutExpired
         SecPerHour = 3600
         return (int(seconds)-base)//SecPerHour
-          
+
+	
+    def store_csv(self):  # store the dataframe in csv file
+        self.df.to_csv("Test.csv", encoding="utf-8-sig", mode="a", header=True, index=True)
+        return 'Test.csv'
+        
     def count_commit_date(self,cumulative,rev_range):
         '''Run git command automatically.
         
@@ -82,6 +92,7 @@ class Get_Commit():
         '''
         rev1 = self.rev
         v44 = 1452466892
+        self.df = pd.DataFrame(columns=('lv', 'hours', 'bugs'))
         for sl in range(1,rev_range+1):
             rev2 = self.rev + "." + str(sl)
             tag_range = rev1 + "..." + rev2
@@ -93,12 +104,15 @@ class Get_Commit():
                 rev1 = rev2
             if commit_cnt:
                 git_tag_date = Popen(gittag, stdout=PIPE, stderr=DEVNULL, shell=True)
-                days = self.get_tag_days(git_tag_date, v44)
-                result = "%d %d %d" % (sl,days,commit_cnt)
+                hours = self.get_tag_hours(git_tag_date, v44)
+                self.df = self.df.append([{'lv':sl, 'hours':hours, 'bugs':commit_cnt}],ignore_index=True)
+                result = "%d %d %d" % (sl,hours,commit_cnt)
                 print(result)
             else:
                 break
-            
-            
+        self.df = self.df.set_index('lv')
+        self.store_csv()
+        
+        
 if __name__ == '__main__':
     a = Get_Commit()
