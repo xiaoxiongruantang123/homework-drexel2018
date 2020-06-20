@@ -2,10 +2,13 @@
 # -*- coding: utf-8 -*-
 
 """
-Author: Yiqi Huang
-StudentID: 320180939801 
-CopyRight 2020 by Yiqi Huang. 
-Everyone can consider this file as a reference.
+__author__ = Yiqi Huang
+__coptright__ = Copyright 2020, Yiqi Huang
+__license__ = GPL
+__version__ = 0.2
+__maintainer__ = Yiqi Huang
+__email__ = "huangyq2018@lzu.edu.cn"
+__status__ = Done
 
 """
 
@@ -81,6 +84,7 @@ class Count_Commit:
         self.rev = rev
         self.rev_range = rev_range
         rev1 = rev
+        print("lv hour bugs") #tag for R data.frame
         try:
             for sl in range(1,rev_range+1):
                 rev2 = rev + "." + str(sl)
@@ -113,4 +117,3 @@ if __name__ == "__main__":
     cumulative = args.cumulative
     count.main(rev,rev_range)
     print("#sublevel commits %s stable fixes" % rev)
-    print("lv hour bugs") #tag for R data.frame
