@@ -7,6 +7,7 @@ __version__ = "1.0.0"
 
 import re, sys, datetime
 from argparse import ArgumentParser
+import matplotlib.pyplot as plt
 from subprocess import Popen, TimeoutExpired, PIPE, DEVNULL
 
 class commit_hour:
@@ -72,6 +73,17 @@ class commit_hour:
             sys.exit(-1)
             commit_hour.log_err(e)
         return (int(seconds) - base) // SecPerHour
+
+    def plot_image(self):
+        plt.scatter(self.sublevels, self.commits)
+        plt.ylable('fix commits')
+        plt.xlable('kernel sublevel')
+        plt.savefig("sublevel_%s.png" % self.rev)
+        plt.clf()
+        plt.scatter(self.release_hours, self.commits)
+        plt.ylabel('fix commits')
+        plt.xlable('hours')
+        plt.savefig("hours_%s.png" % self.rev)
 
     def get_list(self):
         # get the list of sublevel, hours spent and stable fix commits
