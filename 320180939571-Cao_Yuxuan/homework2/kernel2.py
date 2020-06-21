@@ -55,6 +55,7 @@ def make_picture(all_time_stamp_list):  #make the picture and show it
         plt.xlabel('seconds')
         plt.ylabel('patchlevel')
         plt.scatter(i, j)
+        plt.title ('timestamps')
     plt.show()
 
 
