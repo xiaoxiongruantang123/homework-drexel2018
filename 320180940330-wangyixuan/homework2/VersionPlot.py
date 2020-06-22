@@ -28,7 +28,7 @@ class Get_Versions_Time():
         return the list of versions.
         '''
         gittag = subprocess.Popen("git tag", cwd=self.address, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, shell=True)
-        gittag = re.findall('v[0-9].[0-9].[0-9]', str(gittag.communicate()[0]))
+        gittag = re.findall('v[0-9].[0-9]', str(gittag.communicate()[0]))
         gitversions = []
         for i in gittag:
             if i not in gitversions:
@@ -53,7 +53,7 @@ class Get_Versions_Time():
             else:
                 seconds_times.append((int(tag_counts) - seconds_times[0])//24//3600)
         seconds_times[0] = 0
-        print(len(seconds_times),len(self.versions))
+        #print(len(seconds_times),len(self.versions))
         return seconds_times
 
     def draw_time_versions(self):
