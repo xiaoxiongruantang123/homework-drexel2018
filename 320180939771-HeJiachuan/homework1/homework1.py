@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+
 # get the commit count per sublevel pointwise or cumulative (c)
 # arguments is the tag as displayed by git tag and the number
 # of sublevels to be counted. If count is out of range for a 
@@ -15,11 +16,16 @@
 # documentation: once you understand it - fix the docs !
 # transform it into a class rather than just functions !
 #
-__Copyright__ = "Copyright Jiachuan_He 2020"
-__Created_on__ = "2020-3-19"
-__Author__ = "Jiachuan_He 320180939771"
-__Version__ = "1.0.0"
-__Title__ = "homework1"
+
+"""
+__author__ = "Jiachuan He - 320180939771"
+__copyright__ = "Copyright 2020, Jiachuan_He homework1"
+__time__ = "2020-3-19"
+__version__ = "1.0.0"
+__title__ = "homework1"
+__email__ = "hejch2018@lzu.edu.cn"
+__status__ = "Production"
+"""
 
 import re
 import sys
